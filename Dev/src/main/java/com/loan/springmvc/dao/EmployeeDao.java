@@ -8,11 +8,9 @@ public interface EmployeeDao {
 
 	Employee findById(int id);
 	
-	Employee findBySSO(String sso);
-	
 	void save(Employee employee);
-	
-	void deleteBySSO(String sso);
-	
+		
 	List<Employee> findAllEmployees();
+	
+	Employee findbyUserName(String username);
 }

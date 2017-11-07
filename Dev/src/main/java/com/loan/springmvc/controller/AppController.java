@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.loan.springmvc.model.Employee;
 import com.loan.springmvc.model.User;
 import com.loan.springmvc.model.UserProfile;
+import com.loan.springmvc.service.EmployeeService;
 import com.loan.springmvc.service.UserProfileService;
 import com.loan.springmvc.service.UserService;
 
@@ -33,6 +35,9 @@ public class AppController {
 	UserService userService;
 	
 	@Autowired
+	EmployeeService employeeService;
+	
+	@Autowired
 	UserProfileService userProfileService;
 	
 	
@@ -42,7 +47,7 @@ public class AppController {
 	/**
 	 * This method will list all existing users.
 	 */
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/user", "/list" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
 
 		List<User> users = userService.findAllUsers();
@@ -55,6 +60,33 @@ public class AppController {
 	public String indexPage(ModelMap model) {
 		model.addAttribute("index", true);
 		return "index";
+	}
+	
+	@RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+	public String loginPage(ModelMap model) {
+		model.addAttribute("employee", new Employee());
+		return "login";
+	}
+	
+	@RequestMapping(value = {"/authenticate"}, method = RequestMethod.POST)
+	public String authenticateMethod(@Valid Employee employee, BindingResult result,
+			ModelMap model) {
+		
+		if (result.hasErrors()) {
+			return "login";
+		}
+		String username = employee.getUsername();
+		String password = employee.getPassword();
+		
+		Employee emp = employeeService.findbyUserName(username);
+		
+		if(username.equals(emp.getUsername())&& password.equals(emp.getPassword())) {
+			model.addAttribute("index", true);
+			return "index";
+		}else {
+			model.addAttribute("login", true);
+			return "login";
+		}		
 	}
 	
 	

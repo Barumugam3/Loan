@@ -3,33 +3,25 @@ package com.loan.springmvc.dao;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.loan.springmvc.model.Employee;
 
+@Repository("employeeDao")
 public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements EmployeeDao{
 
-	@Override
+	
 	public Employee findById(int id) {
 		Employee employee = getByKey(id);
 		return employee;
 	}
 
-	@Override
-	public Employee findBySSO(String sso) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
 	public void save(Employee employee) {
 		persist(employee);		
 	}
 
-	@Override
-	public void deleteBySSO(String sso) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Employee> findAllEmployees() {
@@ -46,6 +38,20 @@ public class EmployeeDaoImpl extends AbstractDao<Integer, Employee> implements E
 		        return;
 		    }
 		    collection.iterator().hasNext();
+		}
+
+		@Override
+		public Employee findbyUserName(String username) {
+			Employee employee = null ;
+			try {
+			Object objectEmployee = getEntityManager()
+					.createQuery("SELECT e FROM Employee e WHERE e.username='"+username+"'")
+					.getSingleResult();
+			 employee = (Employee) objectEmployee;
+			} catch (Exception e) {
+				e.fillInStackTrace();
+			}
+			return employee;
 		}
 
 }

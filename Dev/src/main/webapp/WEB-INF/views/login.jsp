@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,36 +37,43 @@
 
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<div class="well lead">User Login</div>
+ 	<form:form method="POST" modelAttribute="employee" action="authenticate" class="form-horizontal">
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="col-md-1">
+					<form:input type="text" path="username" id="username" class="form-control input-sm"/>
+					<div class="has-error">
+						<form:errors path="username" class="help-inline"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-12">
+				<label class="col-md-3 control-lable" for="password">Password</label>
+				<div class="col-md-2">
+					<form:input type="password" path="password" id="password" class="form-control input-sm" />
+					<div class="has-error">
+						<form:errors path="password" class="help-inline"/>
+					</div>
+				</div>
+			</div>
+		</div>
+ 	<div class="checkbox"> <label>
+          <input name="remember" type="checkbox" value="Remember Me">Remember Me
+       </label>
     </div>
+		<div class="row">
+			<div class="form-actions floatRight">
+			
+						<input type="submit" value="Login" class="btn btn-primary btn-sm"/> 
+				</div>
+		</div>
+	</form:form>
+                        
+
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
